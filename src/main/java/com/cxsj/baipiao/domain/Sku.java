@@ -17,7 +17,9 @@ public class Sku {
 
     private Long soldNum;
 
-    private List<SkuSpec> goodsSpecList;
+    private List<SkuSpec> skuSpecList;
 
-    private String goodsSpecs;
+    private String skuSpecs;
+
+    private String feature;
 }

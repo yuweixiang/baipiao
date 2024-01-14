@@ -2,18 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cxsj.baipiao.dal.dao.UserMapper">
     <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.User"/>
+
+    <sql id="Base_Column_List">
+        id
+        , gmt_create, gmt_modified, nick,pic, telephone,status, feature
+    </sql>
+
     <insert id="insert">
-
+        insert into user (id, gmt_create, gmt_modified,
+                            nick, pic, telephone, status, point, feature)
+        values ( #{id,jdbcType=BIGINT}, now(), now(), #{nick}, #{pic}, #{telephone}
+               , #{status}, #{point},#{feature})
     </insert>
-    <update id="reducePoint"></update>
+    <update id="reducePoint">
+        update users set point = point-#{point}
+        where id = #{id} and point >= #{point}
+    </update>
+
     <select id="queryByTelephone" resultType="com.cxsj.baipiao.domain.User">
-
+        select <include refid="Base_Column_List"/> from user where telephone = #{telephone}
     </select>
+
     <select id="queryById" resultType="com.cxsj.baipiao.domain.User">
-
+        select <include refid="Base_Column_List"/> from user where id = #{id}
     </select>
-    <select id="queryPoint" resultType="java.lang.Double">
 
+    <select id="queryPoint" resultType="java.lang.Double">
+        select point from user where id = #{id}
     </select>
 
 </mapper>

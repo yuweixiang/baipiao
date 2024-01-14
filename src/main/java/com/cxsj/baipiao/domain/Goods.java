@@ -22,7 +22,7 @@ public class Goods {
 
     private List<Sku> skuList;
 
-    private String skus;
+    private String skuInfo;
 
     private Long categoryId;
 
@@ -40,4 +40,5 @@ public class Goods {
 
     private Date gmtModified;
 
+    private String feature;
 }

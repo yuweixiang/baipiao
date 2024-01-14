@@ -2,14 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cxsj.baipiao.dal.dao.AddressMapper">
     <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.Address"/>
+
+    <sql id="Base_Column_List">
+        id
+        , user_id,
+        , gmt_create, gmt_modified, is_default,province, city, area, town, detail, recive_name,telephone, label,feature
+    </sql>
+
     <insert id="insert">
-
+        insert into address (id, gmt_create, gmt_modified, user_id,is_default,
+                             province, city, area, town, detail, recive_name, label, feature)
+        values ( #{id,jdbcType=BIGINT}, now(), now(), #{userId},#{isDefault}, #{province}, #{city}
+               , #{area}, #{town}, #{detail}, #{reciveName},#{telephone}, #{label}, #{feature,jdbcType=VARCHAR})
     </insert>
+    <update id="updateAddress">
+        update users
+        set gmt_modified = #{gmtModified},
+            user_id=#{userId},
+            is_default=#{isDefault},
+            province=#{province},
+            city=#{city},
+            area=#{area},
+            town=#{town},
+            detail=#{detail},
+            recive_name=#{reciveName},
+            telephone=#{telephone},
+            label=#{label},
+            feature=#{feature}
+        where id = #{id}
+    </update>
     <select id="queryByUser" resultType="com.cxsj.baipiao.domain.Address">
-
+        select
+        <include refid="Base_Column_List"/>
+        from address where user_id = #{userId} order by id desc
     </select>
     <select id="queryDefaultAddress" resultType="com.cxsj.baipiao.domain.Address">
-
+        select <include refid="Base_Column_List"/>
+        from address where user_id = #{userId} and is_default = 'Y'
     </select>
 
 </mapper>

@@ -8,4 +8,6 @@ public class OrderQueryRequest extends PageRequest {
     private Long userId;
 
     private String status;
+
+    private Long orderId;
 }

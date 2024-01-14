@@ -11,7 +11,7 @@ public interface OrderMapper {
 
     public Long insert(Order order);
 
-    public Order queryById(@Param("orderId") Long orderId);
+    public Order queryById(@Param("userId")Long userId,@Param("orderId") Long orderId);
 
     public Long updateStatus(@Param("orderId")Long orderId, @Param("status") String orderStatus);
 

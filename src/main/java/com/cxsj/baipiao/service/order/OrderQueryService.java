@@ -9,5 +9,5 @@ public interface OrderQueryService {
 
     List<Order> queryOrder(OrderQueryRequest request);
 
-    Order queryOrderDetail(Long orderId);
+    Order queryOrderDetail(Long userId,Long orderId);
 }

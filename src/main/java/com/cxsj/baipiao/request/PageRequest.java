@@ -7,9 +7,9 @@ import java.util.Map;
 @Data
 public class PageRequest {
 
-    private Integer pageIndex;
+    private Integer pageIndex = 1;
 
-    private Integer pageSize;
+    private Integer pageSize = 10;
 
     private Long totalSize;
 

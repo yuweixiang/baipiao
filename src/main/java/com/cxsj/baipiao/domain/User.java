@@ -17,7 +17,11 @@ public class User {
 
     private String nick;
 
+    private String pic;
+
     private String status;
 
     private String point;
+
+    private String feature;
 }

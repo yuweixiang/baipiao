@@ -1,7 +1,6 @@
 package com.cxsj.baipiao.service.order;
 
 import com.cxsj.baipiao.dal.dao.*;
-import com.cxsj.baipiao.dal.dataObject.OrderDO;
 import com.cxsj.baipiao.domain.*;
 import com.cxsj.baipiao.enums.OrderStatusEnum;
 import com.cxsj.baipiao.exception.BizException;
@@ -28,7 +27,7 @@ public class OrderServiceImpl implements OrderService{
     private SkuMapper skuMapper;
 
     @Resource
-    private SequenseMapper sequenseMapper;
+    private SequenceMapper sequenceMapper;
 
     @Resource
     private OrderAddressMapper orderAddressMapper;
@@ -46,7 +45,7 @@ public class OrderServiceImpl implements OrderService{
         reducePoint(order);
 
         Long orderId = generateOrderId();
-        order.setStatus(OrderStatusEnum.CREATED.getCode());
+        order.setStatus(OrderStatusEnum.PAID.getCode());
         order.setId(orderId);
         orderMapper.insert(order);
         orderAddressMapper.insert(orderId,order.getOrderAddress());
@@ -70,7 +69,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     private Long generateOrderId() {
-        Long sequenceId = sequenseMapper.getId();
+        Long sequenceId = sequenceMapper.getId();
 
         Date d = new Date();
         SimpleDateFormat sbf = new SimpleDateFormat("yyyyMMdd");

@@ -46,9 +46,9 @@ public class OrderQueryServiceImpl implements OrderQueryService{
     }
 
     @Override
-    public Order queryOrderDetail(Long orderId) {
+    public Order queryOrderDetail(Long userId,Long orderId) {
 
-        Order order = orderMapper.queryById(orderId);
+        Order order = orderMapper.queryById(userId,orderId);
 
         Goods orderGoods = orderGoodsMapper.queryByOrder(orderId);
 

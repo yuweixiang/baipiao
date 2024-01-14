@@ -4,21 +4,25 @@
     <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.Order"/>
     <sql id="Base_Column_List">
         id
-        , gmt_create, gmt_modified, user_id, status, feature
+        , gmt_create, gmt_modified, user_id, status, price,logistics_no, feature
     </sql>
 
     <select id="queryById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from orders
-        where id = #{id}
+        where id = #{id} and user_id = #{userId}
     </select>
 
     <select id="queryOrdersByStatus" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from orders
-        where user_id = #{userId} and status = #{status} order by id desc
+        where user_id = #{userId}
+        <if test="status !=null and status !=''">
+            and status= #{status}
+        </if >
+        order by id desc
         limit #{index},#{pageSize}
     </select>
 

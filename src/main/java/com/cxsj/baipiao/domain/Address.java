@@ -9,6 +9,10 @@ public class Address {
 
     private Long id;
 
+    private Long orderId;
+
+    private Long userId;
+
     private Date gmtCreate;
 
     private Date gmtModified;
@@ -25,5 +29,11 @@ public class Address {
 
     private String detail;
 
-    private String zipCode;
+    private String reviveName;
+
+    private String telephone;
+
+    private String label;
+
+    private String feature;
 }
