@@ -6,14 +6,14 @@
     <sql id="Base_Column_List">
         id
         , order_id,
-        , gmt_create, gmt_modified, province, city, area, town, detail, recive_name,telephone, feature
+        , gmt_create, gmt_modified, province, city, area, town, detail, receive_name,telephone, feature
     </sql>
 
     <insert id="insert">
         insert into order_address (id, gmt_create, gmt_modified, order_id,
-                                   province, city, area, town, detail, recive_name,telephone, feature)
+                                   province, city, area, town, detail, receive_name,telephone, feature)
         values ( #{id,jdbcType=BIGINT}, now(), now(), #{orderId}, #{province}, #{city}
-               , #{area}, #{town}, #{detail}, #{reciveName},#{telephone}, #{label}, #{feature,jdbcType=VARCHAR})
+               , #{area}, #{town}, #{detail}, #{receiveName},#{telephone}, #{label}, #{feature,jdbcType=VARCHAR})
     </insert>
     <select id="queryByOrder" resultType="com.cxsj.baipiao.domain.Address">
         select

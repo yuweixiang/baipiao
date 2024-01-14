@@ -6,14 +6,14 @@
     <sql id="Base_Column_List">
         id
         , user_id,
-        , gmt_create, gmt_modified, is_default,province, city, area, town, detail, recive_name,telephone, label,feature
+        , gmt_create, gmt_modified, is_default,province, city, area, town, detail, receive_name,telephone, label,feature
     </sql>
 
     <insert id="insert">
         insert into address (id, gmt_create, gmt_modified, user_id,is_default,
-                             province, city, area, town, detail, recive_name, label, feature)
+                             province, city, area, town, detail, receive_name, label, feature)
         values ( #{id,jdbcType=BIGINT}, now(), now(), #{userId},#{isDefault}, #{province}, #{city}
-               , #{area}, #{town}, #{detail}, #{reciveName},#{telephone}, #{label}, #{feature,jdbcType=VARCHAR})
+               , #{area}, #{town}, #{detail}, #{receiveName},#{telephone}, #{label}, #{feature,jdbcType=VARCHAR})
     </insert>
     <update id="updateAddress">
         update users
@@ -25,7 +25,7 @@
             area=#{area},
             town=#{town},
             detail=#{detail},
-            recive_name=#{reciveName},
+            receive_name=#{receiveName},
             telephone=#{telephone},
             label=#{label},
             feature=#{feature}

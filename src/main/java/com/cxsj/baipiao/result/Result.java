@@ -1,4 +1,4 @@
-package com.cxsj.baipiao;
+package com.cxsj.baipiao.result;
 
 
 public class Result<T> {

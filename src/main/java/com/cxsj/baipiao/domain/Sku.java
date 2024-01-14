@@ -9,13 +9,15 @@ public class Sku {
 
     private Long id;
 
+    private Long goodsId;
+
     private String skuImage;
 
     private Double price;
 
-    private Long stock;
+    private Integer stock;
 
-    private Long soldNum;
+    private Integer soldNum;
 
     private List<SkuSpec> skuSpecList;
 

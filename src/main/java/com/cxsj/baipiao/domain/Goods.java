@@ -16,7 +16,7 @@ public class Goods {
 
     private Double price;
 
-    private String desc;
+    private String goodsDesc;
 
     private String primaryImage;
 
@@ -24,9 +24,11 @@ public class Goods {
 
     private String skuInfo;
 
+    private Integer num;
+
     private Long categoryId;
 
-    private Long stockNum;
+    private Integer stockNum;
 
     private List<String> imageList;
 

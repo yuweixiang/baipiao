@@ -29,7 +29,7 @@ public class Address {
 
     private String detail;
 
-    private String reviveName;
+    private String receiveName;
 
     private String telephone;
 

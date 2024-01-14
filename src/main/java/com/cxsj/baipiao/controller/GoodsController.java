@@ -1,11 +1,10 @@
 package com.cxsj.baipiao.controller;
 
-import com.cxsj.baipiao.Result;
+import com.cxsj.baipiao.result.PageResult;
+import com.cxsj.baipiao.result.Result;
 import com.cxsj.baipiao.domain.Goods;
-import com.cxsj.baipiao.domain.Order;
 import com.cxsj.baipiao.request.GoodsQueryRequest;
 import com.cxsj.baipiao.service.goods.GoodsService;
-import com.cxsj.baipiao.service.order.OrderService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,10 +19,13 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @RequestMapping("/queryGoods")
-    public Result<List<Goods>> queryGoods(GoodsQueryRequest request) {
+    public PageResult<Goods> queryGoods(GoodsQueryRequest request) {
 
         List<Goods> goodsList = goodsService.queryGoodsByCondition(request);
-        return new Result<>(goodsList, true);
+        PageResult<Goods> result = new PageResult<>(goodsList, true);
+        result.setPageSize(request.getPageSize());
+        result.setPageIndex(request.getPageIndex());
+        return result;
     }
 
     @RequestMapping("/queryGoodsDetail")

@@ -21,7 +21,7 @@ public class User {
 
     private String status;
 
-    private String point;
+    private Double point;
 
     private String feature;
 }

@@ -1,12 +1,9 @@
 package com.cxsj.baipiao.controller;
 
-import com.cxsj.baipiao.Result;
+import com.cxsj.baipiao.result.Result;
 import com.cxsj.baipiao.dal.dao.AddressMapper;
 import com.cxsj.baipiao.domain.Address;
-import com.cxsj.baipiao.domain.Goods;
 import com.cxsj.baipiao.exception.BizException;
-import com.cxsj.baipiao.request.GoodsQueryRequest;
-import com.cxsj.baipiao.service.goods.GoodsService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

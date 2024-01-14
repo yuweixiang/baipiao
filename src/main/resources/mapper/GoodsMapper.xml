@@ -4,16 +4,16 @@
     <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.Goods"/>
 
     <sql id="Base_Column_List">
-        id, title,price,desc,primary_image,sku_id,category_id,stock_num,images,sold_num,desc_image,gmt_create,gmt_modified,feature
+        id, title,price,goods_desc,primary_image,category_id,stock_num,images,sold_num,desc_image,gmt_create,gmt_modified,feature
     </sql>
     <insert id="insert">
-        insert into goods (id, gmt_create, gmt_modified, title,price,desc,
-                             primary_image,sku_id,category_id,stock_num,images,sold_num,desc_image, feature)
-        values ( #{id,jdbcType=BIGINT}, now(), now(), #{title},#{price}, #{desc}, #{primaryImage}
-               , #{skuId}, #{categoryId}, #{stockNum}, #{images}, #{soldNum},#{descImage} #{feature,jdbcType=VARCHAR})
+        insert into goods (id, gmt_create, gmt_modified, title,price,goods_desc,
+                             primary_image,category_id,stock_num,images,sold_num,desc_image, feature)
+        values ( #{id,jdbcType=BIGINT}, now(), now(), #{title},#{price}, #{goodsDesc}, #{primaryImage}
+               , #{categoryId}, #{stockNum}, #{images}, #{soldNum},#{descImage} #{feature,jdbcType=VARCHAR})
     </insert>
 
-    <update id="pageQueryByCondition">
+    <select id="pageQueryByCondition" resultType="com.cxsj.baipiao.domain.Goods">
         select
         <include refid="Base_Column_List"/>
         from goods where 1=1
@@ -23,7 +23,7 @@
         <if test="goodsName !=null and goodsName !=''">
             and title like CONCAT('%',#{goodsName},'%')
         </if > order by id desc limit #{index},#{pageSize}
-    </update>
+    </select>
 
     <select id="queryById" resultType="com.cxsj.baipiao.domain.Goods">
         select

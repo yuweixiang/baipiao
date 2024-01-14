@@ -24,7 +24,7 @@ public class GoodsServiceImpl implements GoodsService{
 
     public List<Goods> queryGoodsByCondition(GoodsQueryRequest request){
 
-        Integer index = request.getPageIndex()*request.getPageSize();
+        Integer index = (request.getPageIndex()-1)*request.getPageSize();
         List<Goods> goodsList = goodsMapper.pageQueryByCondition(request.getCategoryId(),
                 request.getGoodsName(),index,request.getPageSize());
         goodsList.forEach(goods -> {
@@ -39,10 +39,10 @@ public class GoodsServiceImpl implements GoodsService{
         Goods goods = goodsMapper.queryById(goodsId);
         List<Sku> skuList = skuMapper.queryByGoodsId(goodsId);
         skuList.forEach(sku -> {
-            sku.getSkuSpecList().forEach(goodsSpec->{
-                goodsSpec.setSpecValueList(JSONObject.parseArray(goodsSpec.getSpecValues(), String.class));
-            });
             sku.setSkuSpecList(JSONObject.parseArray(sku.getSkuSpecs(), SkuSpec.class));
+            sku.getSkuSpecList().forEach(skuSpec -> {
+                skuSpec.setSpecValueList(JSONObject.parseArray(skuSpec.getSpecValues(),String.class));
+            });
         });
         goods.setSkuList(skuList);
 
