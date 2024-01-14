@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxsj.baipiao.dal.dao.AddressMapper">
+    <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.Address"/>
+    <insert id="insert">
+
+    </insert>
+    <select id="queryByUser" resultType="com.cxsj.baipiao.domain.Address">
+
+    </select>
+    <select id="queryDefaultAddress" resultType="com.cxsj.baipiao.domain.Address">
+
+    </select>
+
+</mapper>

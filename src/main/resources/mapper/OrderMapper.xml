@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxsj.baipiao.dal.dao.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.Order"/>
+    <sql id="Base_Column_List">
+        id
+        , gmt_create, gmt_modified, user_id, status, feature
+    </sql>
+
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from orders
+        where id = #{id}
+    </select>
+
+    <select id="queryOrdersByStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from orders
+        where user_id = #{userId} and status = #{status} order by id desc
+        limit #{index},#{pageSize}
+    </select>
+
+    <insert id="insert" parameterType="com.cxsj.baipiao.domain.Order">
+        insert into orders (id, gmt_create, gmt_modified,
+                            user_id, status, price, logistics_no, feature)
+        values ( #{id,jdbcType=BIGINT}, now(), now(), #{userId}, #{status}, #{price}
+               , #{logisticsNo}, #{feature,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateStatus" parameterType="com.cxsj.baipiao.domain.Order">
+        update orders
+        set gmt_modified= now(),
+            status=#{status}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>
