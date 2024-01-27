@@ -17,6 +17,10 @@
             )
         </foreach>
     </update>
+    <update id="reduceStock">
+        update users set stock = stock-#{num}
+        where id = #{id} and stock >= #{num}
+    </update>
 
     <select id="queryByGoodsId" resultType="com.cxsj.baipiao.domain.Sku">
         select

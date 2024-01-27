@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface OrderGoodsMapper {
 
-    public Long insert(@Param("orderId") Long orderId, @Param("goods") Goods goods);
+    public Long insert(Goods goods);
 
     public Goods queryByOrder(@Param("orderId") Long orderId);
 

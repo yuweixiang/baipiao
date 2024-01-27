@@ -10,10 +10,10 @@
     </sql>
 
     <insert id="insert">
-        insert into order_address (id, gmt_create, gmt_modified, order_id,
+        insert into order_address (gmt_create, gmt_modified, order_id,
                                    province, city, area, town, detail, receive_name,telephone, feature)
-        values ( #{id,jdbcType=BIGINT}, now(), now(), #{orderId}, #{province}, #{city}
-               , #{area}, #{town}, #{detail}, #{receiveName},#{telephone}, #{label}, #{feature,jdbcType=VARCHAR})
+        values ( now(), now(), #{orderId}, #{province}, #{city}
+               , #{area}, #{town}, #{detail}, #{receiveName},#{telephone}, #{feature,jdbcType=VARCHAR})
     </insert>
     <select id="queryByOrder" resultType="com.cxsj.baipiao.domain.Address">
         select

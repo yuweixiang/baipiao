@@ -15,8 +15,8 @@
                , #{status}, #{point},#{feature})
     </insert>
     <update id="reducePoint">
-        update users set point = point-#{point}
-        where id = #{id} and point >= #{point}
+        update user set point = point-#{num}
+        where id = #{userId} and point >= #{num}
     </update>
 
     <select id="queryByTelephone" resultType="com.cxsj.baipiao.domain.User">
@@ -28,7 +28,7 @@
     </select>
 
     <select id="queryPoint" resultType="java.lang.Double">
-        select point from user where id = #{id}
+        select point from user where id = #{userId}
     </select>
 
 </mapper>

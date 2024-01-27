@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface OrderAddressMapper {
 
-    public Long insert(@Param("orderId") Long orderId, @Param("address") Address address);
+    public Long insert(Address address);
 
     public Address queryByOrder(@Param("orderId") Long orderId);
 }

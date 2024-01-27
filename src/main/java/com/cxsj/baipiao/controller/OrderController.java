@@ -34,9 +34,9 @@ public class OrderController {
     private OrderGoodsMapper orderGoodsMapper;
 
     @RequestMapping("/createOrder")
-    public Result<Long> createOrder(Order order) {
+    public Result<Long> createOrder(OrderRenderReqeust reqeust) {
 
-        Long orderId = orderService.createOrder(order);
+        Long orderId = orderService.createOrder(reqeust);
         return new Result<>(orderId, true);
     }
 
@@ -48,6 +48,7 @@ public class OrderController {
         Sku sku = new Sku();
         sku.setId(reqeust.getSkuId());
         gooods.setSkuList(Lists.newArrayList(sku));
+        gooods.setNum(reqeust.getSkuNum());
         Order order = orderService.orderRender(reqeust.getUserId(), gooods);
         return new Result<>(order, true);
     }

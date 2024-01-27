@@ -29,6 +29,7 @@ public enum ResultCodeEnum {
     USER_NOT_RIGHT("105", "改账号不是通过你的链接登记的，无法查询！"),
     ILLEGAL_REQUEST("106", "非法请求！"),
     LACK_OF_POINT("107","积分不足,请充值后使用!"),
+    LACK_OF_STOCK("110","库存不足!"),
     NICK_NOT_LOGIN("108","账号未登记，无法查询!"),
     TIME_OUT("109","已经超过查询时间!"),
 

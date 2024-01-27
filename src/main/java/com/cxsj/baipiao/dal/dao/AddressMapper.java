@@ -15,5 +15,7 @@ public interface AddressMapper {
 
     public Address queryDefaultAddress(@Param("userId")Long userId);
 
+    public Address queryById(@Param("id")Long id);
+
     public int updateAddress(Address address);
 }
