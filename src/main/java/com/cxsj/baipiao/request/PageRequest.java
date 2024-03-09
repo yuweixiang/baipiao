@@ -1,11 +1,12 @@
 package com.cxsj.baipiao.request;
 
+import com.cxsj.baipiao.bizShare.BaseRequest;
 import lombok.Data;
 
 import java.util.Map;
 
 @Data
-public class PageRequest {
+public class PageRequest extends BaseRequest {
 
     private Integer pageIndex = 1;
 

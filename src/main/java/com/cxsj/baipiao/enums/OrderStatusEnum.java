@@ -11,7 +11,9 @@ public enum OrderStatusEnum {
 
     SHIPPED("SHIPPED", "已发货"),
 
-    SIGNED("SIGNED", "已签收"),
+    COMPLETE("COMPLETE", "已完成"),
+
+    CANCELED("CANCELED", "已取消"),
     ;
 
     /** 枚举代码 */

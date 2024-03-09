@@ -1,9 +1,10 @@
 package com.cxsj.baipiao.request;
 
+import com.cxsj.baipiao.bizShare.BaseRequest;
 import lombok.Data;
 
 @Data
-public class OrderRenderReqeust {
+public class OrderRenderReqeust extends BaseRequest {
 
     private Long userId;
 

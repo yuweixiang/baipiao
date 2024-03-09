@@ -9,5 +9,5 @@ public interface OrderService {
 
     Long createOrder(OrderRenderReqeust reqeust);
 
-    Order orderRender(Long userId, Goods goods);
+    Order orderRender(OrderRenderReqeust reqeust);
 }

@@ -26,4 +26,6 @@ public class Order {
     private Double price;
 
     private String feature;
+
+    private int settleType = 1;
 }

@@ -4,13 +4,15 @@ package com.cxsj.baipiao.result;
 public class Result<T> {
     private T data;
     private boolean success;
-    private String errorCode;
-    private String errorMsg;
+    private String resultCode;
+    private String resultMsg;
 
     public Result(T data,Boolean success){
         this.data = data;
         this.success = success;
     }
+
+    public Result(){};
 
     public T getData() {
         return data;
@@ -28,19 +30,19 @@ public class Result<T> {
         this.success = success;
     }
 
-    public String getErrorCode() {
-        return errorCode;
+    public String getResultCode() {
+        return resultCode;
     }
 
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getResultMsg() {
+        return resultMsg;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setResultMsg(String resultMsg) {
+        this.resultMsg = resultMsg;
     }
 }

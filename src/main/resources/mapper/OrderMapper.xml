@@ -14,6 +14,16 @@
         where id = #{id} and user_id = #{userId}
     </select>
 
+    <select id="countOrdersByStatus" resultType="java.lang.Integer">
+        select
+        count(1)
+        from orders
+        where user_id = #{userId}
+        <if test="status !=null and status !=''">
+            and status= #{status}
+        </if >
+    </select>
+
     <select id="queryOrdersByStatus" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

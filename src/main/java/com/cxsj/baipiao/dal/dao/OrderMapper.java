@@ -15,6 +15,8 @@ public interface OrderMapper {
 
     public Long updateStatus(@Param("orderId")Long orderId, @Param("status") String orderStatus);
 
+    public Integer countOrdersByStatus(@Param("userId")Long userId, @Param("status") String orderStatus);
+
     public List<Order> queryOrdersByStatus(@Param("userId") Long userId,
                                            @Param("status") String orderStatus,
                                            @Param("index") Integer index,

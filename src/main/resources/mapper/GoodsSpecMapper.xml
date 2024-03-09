@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxsj.baipiao.dal.dao.GoodsSpecMapper">
+    <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.GoodsSpec"/>
+
+    <sql id="Base_Column_List">
+        id
+        , gmt_create, gmt_modified, goods_id,title,spec_value,feature
+    </sql>
+
+    <insert id="insert">
+        insert into address (id, gmt_create, gmt_modified, goods_id,title,
+                             spec_value,  feature)
+        values ( #{id,jdbcType=BIGINT}, now(), now(), #{goodsId},#{title}, #{specValue}, #{feature})
+    </insert>
+    <update id="update">
+        update users
+        set gmt_modified = #{gmtModified},
+            goods_id=#{goodsId},
+            title=#{title},
+            spec_value=#{specValue},
+            feature=#{feature}
+        where id = #{id}
+    </update>
+    <select id="queryByGoodsId" resultType="com.cxsj.baipiao.domain.GoodsSpec">
+        select
+        <include refid="Base_Column_List"/>
+        from goods_spec where goods_id = #{goodsId}
+    </select>
+
+</mapper>

@@ -2,12 +2,13 @@ package com.cxsj.baipiao.service.goods;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cxsj.baipiao.dal.dao.GoodsMapper;
+import com.cxsj.baipiao.dal.dao.GoodsSpecMapper;
 import com.cxsj.baipiao.dal.dao.SkuMapper;
 import com.cxsj.baipiao.domain.Goods;
+import com.cxsj.baipiao.domain.GoodsSpec;
 import com.cxsj.baipiao.domain.Sku;
-import com.cxsj.baipiao.domain.SkuSpec;
+import com.cxsj.baipiao.domain.SpecInfo;
 import com.cxsj.baipiao.request.GoodsQueryRequest;
-import com.cxsj.baipiao.request.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,6 +19,9 @@ public class GoodsServiceImpl implements GoodsService{
 
     @Resource
     private GoodsMapper goodsMapper;
+
+    @Resource
+    private GoodsSpecMapper goodsSpecMapper;
 
     @Resource
     private SkuMapper skuMapper;
@@ -38,12 +42,18 @@ public class GoodsServiceImpl implements GoodsService{
 
         Goods goods = goodsMapper.queryById(goodsId);
         List<Sku> skuList = skuMapper.queryByGoodsId(goodsId);
-        skuList.forEach(sku -> {
-            sku.setSkuSpecList(JSONObject.parseArray(sku.getSkuSpecs(), SkuSpec.class));
-            sku.getSkuSpecList().forEach(skuSpec -> {
-                skuSpec.setSpecValueList(JSONObject.parseArray(skuSpec.getSpecValues(),String.class));
-            });
+        List<GoodsSpec> specs = goodsSpecMapper.queryByGoodsId(goodsId);
+        goods.setImageList(JSONObject.parseArray(goods.getImages(),String.class));
+        specs.forEach(spec->{
+            spec.setSpecId(spec.getId());
+            spec.setSpecValueList(JSONObject.parseArray(spec.getSpecValue(), GoodsSpec.SpecValue.class));
         });
+        goods.setSpecList(specs);
+
+        skuList.forEach(sku -> {
+            sku.setSpecInfo(JSONObject.parseArray(sku.getSkuSpecs(), SpecInfo.class));
+        });
+        goods.setGoodsDesc(JSONObject.parseArray(goods.getDescImage(),String.class));
         goods.setSkuList(skuList);
 
         return goods;

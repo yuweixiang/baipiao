@@ -2,12 +2,14 @@ package com.cxsj.baipiao.service.order;
 
 import com.cxsj.baipiao.domain.Order;
 import com.cxsj.baipiao.request.OrderQueryRequest;
+import com.cxsj.baipiao.result.PageResult;
+import com.cxsj.baipiao.result.Result;
 
 import java.util.List;
 
 public interface OrderQueryService {
 
-    List<Order> queryOrder(OrderQueryRequest request);
+    PageResult<Order> queryOrderList(OrderQueryRequest request);
 
-    Order queryOrderDetail(Long userId,Long orderId);
+    Result<Order> queryOrderDetail(OrderQueryRequest reqeust);
 }

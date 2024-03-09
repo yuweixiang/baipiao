@@ -9,14 +9,19 @@ public class PageResult<T> {
 
     private List<T> data;
     private boolean success;
-    private String errorCode;
-    private String errorMsg;
+    private String resultCode;
+    private String resultMsg;
 
     private Integer pageIndex;
     private Integer pageSize;
 
+    private Integer totalCount;
+
     public PageResult(List<T> data,Boolean success){
         this.data = data;
         this.success = success;
+    }
+
+    public PageResult(){
     }
 }
