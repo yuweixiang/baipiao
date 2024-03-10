@@ -6,21 +6,26 @@
     <sql id="Base_Column_List">
         id
         , user_id
-        , gmt_create, gmt_modified, is_default,province, city, area, town, detail, receive_name,telephone, label,feature
+        , gmt_create, gmt_modified, is_default,province, city, area, town, detail, receive_name,telephone, label,feature,
+        province_code,city_code,area_code
     </sql>
 
-    <insert id="insert">
-        insert into address (id, gmt_create, gmt_modified, user_id,is_default,
-                             province, city, area, town, detail, receive_name, label, feature)
-        values ( #{id,jdbcType=BIGINT}, now(), now(), #{userId},#{isDefault}, #{province}, #{city}
-               , #{area}, #{town}, #{detail}, #{receiveName},#{telephone}, #{label}, #{feature,jdbcType=VARCHAR})
+    <insert id="insert" parameterType="com.cxsj.baipiao.domain.Address" useGeneratedKeys="true" keyProperty="id">
+        insert into address (gmt_create, gmt_modified, user_id,is_default,
+                             province, city, area, town, detail, receive_name, telephone,label, feature,province_code,city_code,area_code)
+        values ( now(), now(), #{userId},#{isDefault}, #{province}, #{city}
+               , #{area}, #{town}, #{detail}, #{receiveName},#{telephone}, #{label}, #{feature,jdbcType=VARCHAR}
+               ,#{provinceCode},#{cityCode},#{areaCode})
     </insert>
     <update id="updateAddress">
-        update users
-        set gmt_modified = #{gmtModified},
+        update address
+        set gmt_modified = now(),
             user_id=#{userId},
             is_default=#{isDefault},
             province=#{province},
+            province_code=#{provinceCode},
+            city_code=#{cityCode},
+            area_code=#{areaCode},
             city=#{city},
             area=#{area},
             town=#{town},
@@ -30,6 +35,12 @@
             label=#{label},
             feature=#{feature}
         where id = #{id}
+    </update>
+    <update id="updateUndefualtAddress">
+        update address set is_default = 'N' where user_id = #{userId}
+        <if test="addressId !=null and addressId !=''">
+            and id != #{addressId}
+        </if >
     </update>
     <select id="queryByUser" resultType="com.cxsj.baipiao.domain.Address">
         select

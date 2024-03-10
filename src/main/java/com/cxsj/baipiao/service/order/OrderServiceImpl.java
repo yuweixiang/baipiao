@@ -49,7 +49,7 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
     private UserMapper userMapper;
 
     @Override
-    public Long createOrder(OrderRenderReqeust reqeust) {
+    public Result<Long> createOrder(OrderRenderReqeust reqeust) {
 
         Result<Long> result = new Result<>();
         processWithTransation(reqeust,result,"createOrder",()->{
@@ -68,6 +68,7 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
             order.setOrderAddress(addressMapper.queryById(reqeust.getAddressId()));
             reducePoint(order);
             order.setStatus(OrderStatusEnum.PAID.getCode());
+            order.setStatusName(OrderStatusEnum.PAID.getDesc());
             order.setId(orderId);
             orderMapper.insert(order);
             order.getOrderAddress().setOrderId(orderId);
@@ -78,12 +79,14 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
             buildSuccess(result);
         });
 
-        return result.getData();
+        return result;
     }
 
     private Goods buildOrderGoods(Sku sku,int num) {
         Goods goods = goodsMapper.queryById(sku.getGoodsId());
         goods.setId(sku.getGoodsId());
+        goods.setGoodsId(sku.getGoodsId());
+        goods.setSkuId(sku.getId());
         goods.setPrice(sku.getPrice());
         goods.setNum(num);
         goods.setPrimaryImage(sku.getSkuImage());

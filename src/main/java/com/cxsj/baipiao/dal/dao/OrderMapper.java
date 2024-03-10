@@ -1,6 +1,7 @@
 package com.cxsj.baipiao.dal.dao;
 
 import com.cxsj.baipiao.domain.Order;
+import com.cxsj.baipiao.domain.UserOrder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,6 +17,8 @@ public interface OrderMapper {
     public Long updateStatus(@Param("orderId")Long orderId, @Param("status") String orderStatus);
 
     public Integer countOrdersByStatus(@Param("userId")Long userId, @Param("status") String orderStatus);
+
+    public List<UserOrder> queryUserOrderCount(@Param("userId")Long userId);
 
     public List<Order> queryOrdersByStatus(@Param("userId") Long userId,
                                            @Param("status") String orderStatus,

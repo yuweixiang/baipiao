@@ -11,7 +11,7 @@ public interface UserMapper {
 
     public User queryByTelephone(@Param("telephone")String telephone);
 
-    public User queryById(@Param("telephone")Long id);
+    public User queryById(@Param("userId")Long id);
 
     public Double queryPoint(@Param("userId")Long userId);
 

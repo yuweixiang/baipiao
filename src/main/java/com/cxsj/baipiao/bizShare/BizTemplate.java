@@ -4,26 +4,36 @@ import com.cxsj.baipiao.common.BaiPiaoContext;
 import com.cxsj.baipiao.common.ContextHolder;
 import com.cxsj.baipiao.enums.ResultCodeEnum;
 import com.cxsj.baipiao.exception.BizException;
+import com.cxsj.baipiao.request.PageRequest;
 import com.cxsj.baipiao.result.PageResult;
 import com.cxsj.baipiao.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import javax.annotation.Resource;
 
 @Slf4j
 public class BizTemplate {
 
-    @Transactional
+    @Resource
+    private TransactionTemplate transactionTemplate;
+
     protected void processWithTransation(BaseRequest request, Result result, String actionType,BusinessProcess processCallback){
         Long startTime = System.currentTimeMillis();
         try {
-            ContextHolder.clear();
-            BaiPiaoContext context = new BaiPiaoContext();
-            context.setActionType(actionType);
-            ContextHolder.set(context);
+            transactionTemplate.execute(status->{
+                ContextHolder.clear();
+                BaiPiaoContext context = new BaiPiaoContext();
+                context.setActionType(actionType);
+                ContextHolder.set(context);
 
-            processCallback.doProcess();
+                processCallback.doProcess();
 
-            log.error("["+actionType+"]--业务处理完成,耗时:{}",System.currentTimeMillis()-startTime);
+                return null;
+            });
+
+            log.info("["+actionType+"]--业务处理完成,耗时:{}",System.currentTimeMillis()-startTime);
         }catch (BizException e){
             log.error("["+actionType+"]--业务处理异常,erroCode={},errorMsg={},request:{}",e.getErrorCode(),e.getMessage(),request,e);
             result.setResultCode(e.getErrorCode());
@@ -32,25 +42,29 @@ public class BizTemplate {
         }catch (Throwable e){
             log.error("["+actionType+"]--未知异常异常,request:{}",request,e);
             result.setResultCode(ResultCodeEnum.SYSTEM_ERROR.getCode());
-            result.setResultMsg(ResultCodeEnum.SYSTEM_ERROR.getDesc());
+            result.setResultMsg("服务器出了点小差");
             result.setSuccess(false);
         }finally {
             ContextHolder.clear();
         }
     }
 
-    @Transactional
     protected void processWithPageTransation(BaseRequest request, PageResult result, String actionType, BusinessProcess processCallback){
         Long startTime = System.currentTimeMillis();
         try {
-            ContextHolder.clear();
-            BaiPiaoContext context = new BaiPiaoContext();
-            context.setActionType(actionType);
-            ContextHolder.set(context);
 
-            processCallback.doProcess();
+            transactionTemplate.execute(status->{
+                ContextHolder.clear();
+                BaiPiaoContext context = new BaiPiaoContext();
+                context.setActionType(actionType);
+                ContextHolder.set(context);
 
-            log.error("["+actionType+"]--业务处理完成,耗时:{}",System.currentTimeMillis()-startTime);
+                processCallback.doProcess();
+
+                return null;
+            });
+
+            log.info("["+actionType+"]--业务处理完成,耗时:{}",System.currentTimeMillis()-startTime);
         }catch (BizException e){
             log.error("["+actionType+"]--业务处理异常,erroCode={},errorMsg={},request:{}",e.getErrorCode(),e.getMessage(),request,e);
             result.setResultCode(e.getErrorCode());
@@ -59,7 +73,7 @@ public class BizTemplate {
         }catch (Throwable e){
             log.error("["+actionType+"]--未知异常异常,request:{}",request,e);
             result.setResultCode(ResultCodeEnum.SYSTEM_ERROR.getCode());
-            result.setResultMsg(ResultCodeEnum.SYSTEM_ERROR.getDesc());
+            result.setResultMsg("服务器出了点小差");
             result.setSuccess(false);
         }finally {
             ContextHolder.clear();
@@ -76,7 +90,7 @@ public class BizTemplate {
 
             processCallback.doProcess();
 
-            log.error("["+actionType+"]--业务处理完成,耗时:{}",System.currentTimeMillis()-startTime);
+            log.info("["+actionType+"]--业务处理完成,耗时:{}",System.currentTimeMillis()-startTime);
         }catch (BizException e){
             log.error("["+actionType+"]--业务处理异常,erroCode={},errorMsg={},request:{}",e.getErrorCode(),e.getMessage(),request,e);
             result.setResultCode(e.getErrorCode());
@@ -85,14 +99,14 @@ public class BizTemplate {
         }catch (Throwable e){
             log.error("["+actionType+"]--未知异常异常,request:{}",request,e);
             result.setResultCode(ResultCodeEnum.SYSTEM_ERROR.getCode());
-            result.setResultMsg(ResultCodeEnum.SYSTEM_ERROR.getDesc());
+            result.setResultMsg("服务器出了点小差");
             result.setSuccess(false);
         }finally {
             ContextHolder.clear();
         }
     }
 
-    protected void processPageWithNoTransation(BaseRequest request, PageResult result, String actionType,BusinessProcess processCallback){
+    protected void processPageWithNoTransation(PageRequest request, PageResult result, String actionType, BusinessProcess processCallback){
         Long startTime = System.currentTimeMillis();
         try {
             ContextHolder.clear();
@@ -102,7 +116,7 @@ public class BizTemplate {
 
             processCallback.doProcess();
 
-            log.error("["+actionType+"]--业务处理完成,耗时:{}",System.currentTimeMillis()-startTime);
+            log.info("["+actionType+"]--业务处理完成,耗时:{}",System.currentTimeMillis()-startTime);
         }catch (BizException e){
             log.error("["+actionType+"]--业务处理异常,erroCode={},errorMsg={},request:{}",e.getErrorCode(),e.getMessage(),request,e);
             result.setResultCode(e.getErrorCode());
@@ -111,7 +125,7 @@ public class BizTemplate {
         }catch (Throwable e){
             log.error("["+actionType+"]--未知异常异常,request:{}",request,e);
             result.setResultCode(ResultCodeEnum.SYSTEM_ERROR.getCode());
-            result.setResultMsg(ResultCodeEnum.SYSTEM_ERROR.getDesc());
+            result.setResultMsg("服务器出了点小差");
             result.setSuccess(false);
         }finally {
             ContextHolder.clear();

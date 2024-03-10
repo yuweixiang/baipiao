@@ -49,6 +49,10 @@ public class Goods {
 
     private String feature;
 
+    private Long goodsId;
+
+    private Long skuId;
+
     public static void main(String[] args) {
         List<GoodsSpec> skuSpecList = new ArrayList<>();
         GoodsSpec skuSpec = new GoodsSpec();

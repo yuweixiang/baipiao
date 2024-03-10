@@ -33,16 +33,7 @@ public class OrderController {
 
     @RequestMapping("/createOrder")
     public Result<Long> createOrder(OrderRenderReqeust reqeust) {
-
-        try {
-            Long orderId = orderService.createOrder(reqeust);
-            return new Result<>(orderId, true);
-        }catch (BizException bizException){
-            Result result = new Result(null,false);
-            result.setResultCode(bizException.getErrorCode());
-            result.setResultMsg(bizException.getMessage());
-            return result;
-        }
+        return orderService.createOrder(reqeust);
     }
 
     @RequestMapping("/render")

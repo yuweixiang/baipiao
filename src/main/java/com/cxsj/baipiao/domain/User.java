@@ -3,6 +3,7 @@ package com.cxsj.baipiao.domain;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class User {
@@ -22,6 +23,12 @@ public class User {
     private String status;
 
     private Double point;
+
+    private List<Address> addresses;
+
+    private CustomerService serviceInfo;
+
+    private List<UserOrder> userOrders;
 
     private String feature;
 }

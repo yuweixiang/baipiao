@@ -11,6 +11,8 @@ public class GoodsSpec {
 
     private String title;
 
+    private String sepcTitle;
+
     private List<GoodsSpec.SpecValue> specValueList;
 
     private String specValue;

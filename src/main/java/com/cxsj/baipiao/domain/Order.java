@@ -13,6 +13,8 @@ public class Order {
 
     private Date gmtModified;
 
+    private Long createTime;
+
     private Address orderAddress;
 
     private Goods orderGoods;
@@ -21,6 +23,8 @@ public class Order {
 
     private String status;
 
+    private String statusName;
+
     private String logisticsNo;
 
     private Double price;
@@ -28,4 +32,6 @@ public class Order {
     private String feature;
 
     private int settleType = 1;
+
+    private Logistics logistics;
 }

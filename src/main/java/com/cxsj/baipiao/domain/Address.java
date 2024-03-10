@@ -21,7 +21,13 @@ public class Address {
 
     private String province;
 
+    private String provinceCode;
+
     private String city;
+
+    private String cityCode;
+
+    private String areaCode;
 
     private String area;
 

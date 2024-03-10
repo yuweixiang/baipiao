@@ -11,7 +11,7 @@
         select
         <include refid="Base_Column_List"/>
         from orders
-        where id = #{id} and user_id = #{userId}
+        where id = #{orderId} and user_id = #{userId}
     </select>
 
     <select id="countOrdersByStatus" resultType="java.lang.Integer">
@@ -34,6 +34,10 @@
         </if >
         order by id desc
         limit #{index},#{pageSize}
+    </select>
+
+    <select id="queryUserOrderCount" resultType="com.cxsj.baipiao.domain.UserOrder">
+        select status as tabType,count(1) as num from orders where user_id = #{userId} group by status
     </select>
 
     <insert id="insert" parameterType="com.cxsj.baipiao.domain.Order">

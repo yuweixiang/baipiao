@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface AddressMapper {
 
-    public int insert(@Param("userId") Long userId, @Param("address") Address address);
+    public int insert(Address address);
 
     public List<Address> queryByUser(@Param("userId") Long userId);
 
@@ -18,4 +18,6 @@ public interface AddressMapper {
     public Address queryById(@Param("id")Long id);
 
     public int updateAddress(Address address);
+
+    void updateUndefualtAddress(@Param("userId") Long userId,@Param("addressId") Long addressId);
 }

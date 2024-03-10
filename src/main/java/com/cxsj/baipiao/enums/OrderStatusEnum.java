@@ -7,9 +7,9 @@ public enum OrderStatusEnum {
 
     CREATED("CREATED", "已创建"),
 
-    PAID("PAID", "已支付"),
+    PAID("PAID", "待发货"),
 
-    SHIPPED("SHIPPED", "已发货"),
+    SHIPPED("SHIPPED", "待收货"),
 
     COMPLETE("COMPLETE", "已完成"),
 
