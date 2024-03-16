@@ -1,5 +1,6 @@
 package com.cxsj.baipiao.bizShare;
 
+import com.cxsj.baipiao.common.AspectContextHolder;
 import com.cxsj.baipiao.common.BaiPiaoContext;
 import com.cxsj.baipiao.common.ContextHolder;
 import com.cxsj.baipiao.enums.ResultCodeEnum;
@@ -7,7 +8,9 @@ import com.cxsj.baipiao.exception.BizException;
 import com.cxsj.baipiao.request.PageRequest;
 import com.cxsj.baipiao.result.PageResult;
 import com.cxsj.baipiao.result.Result;
+import com.cxsj.baipiao.utils.TokenManager;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -142,5 +145,15 @@ public class BizTemplate {
         result.setSuccess(true);
         result.setResultCode(ResultCodeEnum.SUCCESS.getCode());
         result.setResultCode(ResultCodeEnum.SUCCESS.getDesc());
+    }
+
+
+    protected String getOpenidByToken() {
+        String token = AspectContextHolder.get().getToken();
+        if (StringUtils.isBlank(token)){
+            throw new BizException(ResultCodeEnum.NOT_LOGIN);
+        }
+
+        return TokenManager.getUser(token);
     }
 }

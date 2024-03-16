@@ -31,4 +31,12 @@ public class User {
     private List<UserOrder> userOrders;
 
     private String feature;
+
+    private String sex;
+
+    private String openid;
+
+    private String sessionKey;
+
+    private String token;
 }

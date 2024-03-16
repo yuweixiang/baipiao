@@ -38,6 +38,7 @@ public enum ResultCodeEnum {
     URL_ERROR("USR_ERROR","商品链接不正确!"),
     NO_PERSSION("NO_PERSSION","您无权限操作!"),
     LOGIN_TIMEOUT("LOGIN_TIMEOUT","登陆超时,请重新登陆!"),
+    NOT_LOGIN("110","登陆后使用更多功能!"),
     POINT_NOT_ENOUGH("POINT_NOT_ENOUGH","积分不足,无法下单!"),
     SHOP_NOT_IN_RELATION("SHOP_NOT_IN_RELATION","店铺未绑定!"),
     IP_NOT_PERSSION("IP_NOT_PERSSION","系统识别到您存在多ip登录，已自动停止该ip的使用，为防止封号，请正确使用您的账号!"),

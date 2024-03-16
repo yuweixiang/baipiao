@@ -5,18 +5,27 @@
 
     <sql id="Base_Column_List">
         id
-        , gmt_create, gmt_modified, nick,pic, telephone,status,point, feature
+        , gmt_create, gmt_modified, nick,pic, telephone,status,point, feature,sex,openid,session_key
     </sql>
 
-    <insert id="insert">
+    <insert id="insert" parameterType="com.cxsj.baipiao.domain.User">
         insert into user (id, gmt_create, gmt_modified,
-                            nick, pic, telephone, status, point, feature)
+                            nick, pic, telephone, status, point, feature,sex,openid,session_key)
         values ( #{id,jdbcType=BIGINT}, now(), now(), #{nick}, #{pic}, #{telephone}
-               , #{status}, #{point},#{feature})
+               , #{status}, #{point},#{feature},#{sex},#{openid},#{sessionKey})
     </insert>
     <update id="reducePoint">
         update user set point = point-#{num}
         where id = #{userId} and point >= #{num}
+    </update>
+
+    <update id="update" parameterType="com.cxsj.baipiao.domain.User">
+        update user
+        set gmt_modified= now(),
+            nick=#{nick},
+            pic=#{pic},
+            sex=#{sex}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <select id="queryByTelephone" resultType="com.cxsj.baipiao.domain.User">
@@ -29,6 +38,10 @@
 
     <select id="queryPoint" resultType="java.lang.Double">
         select point from user where id = #{userId}
+    </select>
+
+    <select id="queryByOpenid" resultType="com.cxsj.baipiao.domain.User">
+        select <include refid="Base_Column_List"/> from user where openid = #{openid}
     </select>
 
 </mapper>
