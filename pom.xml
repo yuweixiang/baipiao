@@ -15,6 +15,8 @@
     <description>baipiao</description>
     <properties>
         <java.version>1.8</java.version>
+        <diamond-sdk_version>2.2-SNAPSHOT</diamond-sdk_version>
+        <diamond_version>2.2-SNAPSHOT</diamond_version>
     </properties>
     <dependencies>
         <dependency>
@@ -37,6 +39,40 @@
         </dependency>
 
         <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.taobao.diamond</groupId>
+            <artifactId>diamond-client</artifactId>
+            <version>${diamond_version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.taobao.diamond</groupId>
+            <artifactId>diamond-sdk</artifactId>
+            <version>${diamond-sdk_version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -51,7 +87,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <scope>8.0.21</scope>
+            <scope>5.1.46</scope>
         </dependency>
 
         <dependency>
