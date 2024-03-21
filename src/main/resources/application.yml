@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://rm-m5effg3l7hxm9ul0x1o.mysql.rds.aliyuncs.com:3306/dianshang?useUnicode=true&amp;characterEncoding=utf8mb4&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true
+    url: jdbc:mysql://rm-m5effg3l7hxm9ul0x1o.mysql.rds.aliyuncs.com:3306/dianshang?useUnicode=true&character_set_server=utf8mb4&zeroDateTimeBehavior=convertToNull&autoReconnect=true
     username: chuyuanyuan
     password: yuweixiang123!
 
