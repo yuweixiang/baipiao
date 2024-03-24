@@ -42,7 +42,8 @@ public class GoodsServiceImpl implements GoodsService{
 
         Goods goods = goodsMapper.queryById(goodsId);
         List<Sku> skuList = skuMapper.queryByGoodsId(goodsId);
-        List<GoodsSpec> specs = goodsSpecMapper.queryByGoodsId(goodsId);
+        List<Long> specIds = JSONObject.parseArray(goods.getSpecDesc(),Long.class);
+        List<GoodsSpec> specs = goodsSpecMapper.queryByIds(specIds);
         goods.setImageList(JSONObject.parseArray(goods.getImages(),String.class));
         specs.forEach(spec->{
             spec.setSpecId(spec.getId());

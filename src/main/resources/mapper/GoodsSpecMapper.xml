@@ -22,10 +22,13 @@
             feature=#{feature}
         where id = #{id}
     </update>
-    <select id="queryByGoodsId" resultType="com.cxsj.baipiao.domain.GoodsSpec">
+    <select id="queryByIds" resultType="com.cxsj.baipiao.domain.GoodsSpec">
         select
         <include refid="Base_Column_List"/>
-        from goods_spec where goods_id = #{goodsId}
+        from goods_spec where id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
 </mapper>

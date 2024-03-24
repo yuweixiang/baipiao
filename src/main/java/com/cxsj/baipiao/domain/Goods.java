@@ -53,6 +53,8 @@ public class Goods {
 
     private Long skuId;
 
+    private String specDesc;
+
     public static void main(String[] args) {
         List<GoodsSpec> skuSpecList = new ArrayList<>();
         GoodsSpec skuSpec = new GoodsSpec();

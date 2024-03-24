@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface GoodsSpecMapper {
 
-    List<GoodsSpec> queryByGoodsId(@Param("goodsId") Long goodsId);
+    List<GoodsSpec> queryByIds(@Param("ids") List<Long> ids);
 
     int insert(GoodsSpec goodsSpec);
 

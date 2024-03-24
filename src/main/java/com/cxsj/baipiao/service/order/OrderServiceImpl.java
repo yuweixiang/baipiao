@@ -90,14 +90,15 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
         goods.setPrice(sku.getPrice());
         goods.setNum(num);
         goods.setPrimaryImage(sku.getSkuImage());
-        goods.setSkuInfo(buildSkuInfo(sku.getGoodsId(),sku.getSkuSpecs()));
+        goods.setSkuInfo(buildSkuInfo(goods,sku.getSkuSpecs()));
         return goods;
     }
 
-    private String buildSkuInfo(Long goodsId,String skuSpecs) {
+    private String buildSkuInfo(Goods goods,String skuSpecs) {
 
         List<SpecInfo> list = JSONObject.parseArray(skuSpecs,SpecInfo.class);
-        List<GoodsSpec> specs = goodsSpecMapper.queryByGoodsId(goodsId);
+        List<Long> specsIds = JSONObject.parseArray(goods.getSpecDesc(),Long.class);
+        List<GoodsSpec> specs = goodsSpecMapper.queryByIds(specsIds);
         if (CollectionUtils.isEmpty(specs)){
             return skuSpecs;
         }

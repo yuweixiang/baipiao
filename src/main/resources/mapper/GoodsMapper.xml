@@ -4,13 +4,13 @@
     <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.Goods"/>
 
     <sql id="Base_Column_List">
-        id, title,price,goods_desc,primary_image,category_id,stock_num,images,sold_num,desc_image,gmt_create,gmt_modified,feature
+        id, title,price,goods_desc,primary_image,category_id,stock_num,images,sold_num,desc_image,gmt_create,gmt_modified,feature,spec_desc
     </sql>
     <insert id="insert">
         insert into goods (id, gmt_create, gmt_modified, title,price,goods_desc,
-                             primary_image,category_id,stock_num,images,sold_num,desc_image, feature)
+                             primary_image,category_id,stock_num,images,sold_num,desc_image, feature,spec_desc)
         values ( #{id,jdbcType=BIGINT}, now(), now(), #{title},#{price}, #{goodsDesc}, #{primaryImage}
-               , #{categoryId}, #{stockNum}, #{images}, #{soldNum},#{descImage} #{feature,jdbcType=VARCHAR})
+               , #{categoryId}, #{stockNum}, #{images}, #{soldNum},#{descImage} #{feature,jdbcType=VARCHAR},#{specDesc})
     </insert>
 
     <select id="pageQueryByCondition" resultType="com.cxsj.baipiao.domain.Goods">
