@@ -10,11 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class GoodsSynJob {
 
-    @Value("${jstAppKey}")
-    private String jstAppKey;
-
-    @Value("${jstAppSecret}")
-    private String jstAppSecret;
 
     @Async
     @Scheduled(cron = "0 1 * * *")

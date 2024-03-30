@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxsj.baipiao.dal.dao.JstTokenMapper">
+    <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.JstToken"/>
+
+    <sql id="Base_Column_List">
+        id
+        , app_key,code,sign,state,access_token,gmt_create,expires_in,refresh_token
+    </sql>
+
+    <insert id="insert" parameterType="com.cxsj.baipiao.domain.JstToken">
+        insert into jst_token (id, app_key,code,sign,state,access_token,gmt_create,expires_in,refresh_token)
+        values ( #{id,jdbcType=BIGINT}, #{appKey},#{code},#{sign},#{state},#{accessToken},now(),
+                #{expiresIn},#{refreshToken})
+    </insert>
+
+    <select id="queryLast" resultType="com.cxsj.baipiao.domain.JstToken">
+        select <include refid="Base_Column_List"/> from jst_token order by gmt_create desc limit 1
+    </select>
+
+</mapper>
