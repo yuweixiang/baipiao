@@ -4,5 +4,7 @@ import com.cxsj.baipiao.bizShare.BaseRequest;
 import lombok.Data;
 
 @Data
-public class UserCenterReqeust extends BaseRequest {
+public class PointChangeRequest extends BaseRequest {
+
+    private String phone;
 }

@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 public class OrderRenderReqeust extends BaseRequest {
 
-    private Long userId;
-
     private Long goodsId;
 
     private Long skuId;

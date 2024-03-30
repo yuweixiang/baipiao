@@ -7,7 +7,5 @@ import lombok.Data;
 @Data
 public class UpdateAddressRequest extends BaseRequest {
 
-    private Long userId;
-
     private Address address;
 }

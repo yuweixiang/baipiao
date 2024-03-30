@@ -1,6 +1,8 @@
 package com.cxsj.baipiao.controller;
 
 import com.cxsj.baipiao.bizShare.BizTemplate;
+import com.cxsj.baipiao.dal.dao.UserMapper;
+import com.cxsj.baipiao.domain.User;
 import com.cxsj.baipiao.request.UpdateAddressRequest;
 import com.cxsj.baipiao.result.Result;
 import com.cxsj.baipiao.dal.dao.AddressMapper;
@@ -23,25 +25,27 @@ public class AddressController extends BizTemplate {
     @Resource
     private AddressMapper addressMapper;
 
+    @Resource
+    private UserMapper userMapper;
+
     @RequestMapping("/queryDefaultAddress")
-    public Result<Address> queryDefaultAddress(Long userId) {
+    public Result<Address> queryDefaultAddress() {
 
-        if (userId == null){
-            throw new BizException(ILLEGAL_ARGUMENT,"用户id不能为空！");
-        }
+        String openid = getOpenidByToken();
+        User user = userMapper.queryByOpenid(openid);
 
-        Address address = addressMapper.queryDefaultAddress(userId);
+        Address address = addressMapper.queryDefaultAddress(user.getId());
         return new Result<>(address,true);
     }
 
     @RequestMapping("/queryAllAddress")
-    public Result<List<Address>> queryAllAddress(Long userId) {
+    public Result<List<Address>> queryAllAddress() {
 
-        if (userId == null){
-            throw new BizException(ILLEGAL_ARGUMENT,"用户id不能为空！");
-        }
+        String openid = getOpenidByToken();
 
-        List<Address> addresses = addressMapper.queryByUser(userId);
+        User user = userMapper.queryByOpenid(openid);
+
+        List<Address> addresses = addressMapper.queryByUser(user.getId());
         return new Result<>(addresses, true);
     }
 
@@ -57,19 +61,21 @@ public class AddressController extends BizTemplate {
 
         Result<Long> result = new Result<>();
         processWithNoTransation(request,result,"addAddress",()->{
-            if (request.getUserId() == null){
-                throw new BizException(ILLEGAL_ARGUMENT,"用户id不能为空！");
-            }
+
+            String openid = getOpenidByToken();
+
+            User user = userMapper.queryByOpenid(openid);
+
             Address address = request.getAddress();
-            address.setUserId(request.getUserId());
+            address.setUserId(user.getId());
             if (request.getAddress().getId() == null) {
                 if (StringUtils.equals(request.getAddress().getIsDefault(),"Y")) {
-                    addressMapper.updateUndefualtAddress(request.getUserId(),null);
+                    addressMapper.updateUndefualtAddress(user.getId(),null);
                     addressMapper.insert(address);
                 }
             }else {
                 if (StringUtils.equals(request.getAddress().getIsDefault(),"Y")) {
-                    addressMapper.updateUndefualtAddress(request.getUserId(), address.getId());
+                    addressMapper.updateUndefualtAddress(user.getId(), address.getId());
                 }
                 addressMapper.updateAddress(address);
             }
@@ -85,9 +91,8 @@ public class AddressController extends BizTemplate {
 
         Result<Boolean> result = new Result<>();
         processWithNoTransation(request,result,"addAddress",()->{
-            if (request.getUserId() == null){
-                throw new BizException(ILLEGAL_ARGUMENT,"用户id不能为空！");
-            }
+
+            String openid = getOpenidByToken();
 
             int num = addressMapper.updateAddress(request.getAddress());
             result.setData(num>1);

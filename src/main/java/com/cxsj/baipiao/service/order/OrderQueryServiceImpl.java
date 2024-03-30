@@ -2,10 +2,7 @@ package com.cxsj.baipiao.service.order;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cxsj.baipiao.bizShare.BizTemplate;
-import com.cxsj.baipiao.dal.dao.GoodsMapper;
-import com.cxsj.baipiao.dal.dao.OrderAddressMapper;
-import com.cxsj.baipiao.dal.dao.OrderGoodsMapper;
-import com.cxsj.baipiao.dal.dao.OrderMapper;
+import com.cxsj.baipiao.dal.dao.*;
 import com.cxsj.baipiao.domain.*;
 import com.cxsj.baipiao.enums.OrderStatusEnum;
 import com.cxsj.baipiao.exception.BizException;
@@ -32,6 +29,9 @@ public class OrderQueryServiceImpl extends BizTemplate implements OrderQueryServ
     private OrderMapper orderMapper;
 
     @Resource
+    private UserMapper userMapper;
+
+    @Resource
     private OrderGoodsMapper orderGoodsMapper;
 
     @Resource
@@ -42,13 +42,13 @@ public class OrderQueryServiceImpl extends BizTemplate implements OrderQueryServ
         PageResult<Order> result = new PageResult(Lists.newArrayList(),false);
         processPageWithNoTransation(request,result,"orderList",()->{
 
-            validateRequest(request);
-
             if (StringUtils.equals(request.getStatus(),"ALL")){
                 request.setStatus("");
             }
+            String openid = getOpenidByToken();
+            User user = userMapper.queryByOpenid(openid);
 
-            Integer totalCount = orderMapper.countOrdersByStatus(request.getUserId(),request.getStatus());
+            Integer totalCount = orderMapper.countOrdersByStatus(user.getId(),request.getStatus());
             if (totalCount == null || totalCount == 0){
                 result.setTotalCount(0);
                 result.setPageSize(request.getPageSize());
@@ -57,7 +57,7 @@ public class OrderQueryServiceImpl extends BizTemplate implements OrderQueryServ
                 return;
             }
             result.setTotalCount(totalCount);
-            List<Order> orders = orderMapper.queryOrdersByStatus(request.getUserId(),request.getStatus(),
+            List<Order> orders = orderMapper.queryOrdersByStatus(user.getId(),request.getStatus(),
                     (request.getPageIndex()-1)*request.getPageSize(),request.getPageSize());
 
             List<Long> orderIds = orders.stream().map(Order::getId).collect(Collectors.toList());
@@ -84,13 +84,15 @@ public class OrderQueryServiceImpl extends BizTemplate implements OrderQueryServ
     public Result<Order> queryOrderDetail(OrderQueryRequest request) {
         Result<Order> result = new Result<Order>();
         processWithNoTransation(request,result,"queryDetail",()->{
-            validateRequest(request);
 
             if (request.getOrderId() == null) {
                 throw new BizException(ILLEGAL_ARGUMENT, "订单id不能为空！");
             }
 
-            Order order = orderMapper.queryById(request.getUserId(), request.getOrderId());
+            String openid = getOpenidByToken();
+            User user = userMapper.queryByOpenid(openid);
+
+            Order order = orderMapper.queryById(user.getId(), request.getOrderId());
             OrderStatusEnum statusEnum = OrderStatusEnum.getByCode(order.getStatus());
             order.setStatusName(statusEnum.getDesc());
             Goods orderGoods = orderGoodsMapper.queryByOrder(request.getOrderId());
@@ -110,12 +112,5 @@ public class OrderQueryServiceImpl extends BizTemplate implements OrderQueryServ
     public List<UserOrder> queryUserOrderCount(Long userId) {
 
         return orderMapper.queryUserOrderCount(userId);
-    }
-
-
-    private void validateRequest(OrderQueryRequest reqeust) {
-        if (reqeust.getUserId() == null) {
-            throw new BizException(ILLEGAL_ARGUMENT, "用户id不能为空！");
-        }
     }
 }

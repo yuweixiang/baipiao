@@ -14,6 +14,10 @@
         values ( #{id,jdbcType=BIGINT}, now(), now(), #{nick}, #{pic}, #{telephone}
                , #{status}, #{point},#{feature},#{sex},#{openid},#{sessionKey})
     </insert>
+    <update id="addPoint">
+        update user set point = point+#{num}
+        where id = #{userId}
+    </update>
     <update id="reducePoint">
         update user set point = point-#{num}
         where id = #{userId} and point >= #{num}

@@ -20,4 +20,6 @@ public interface UserMapper {
     public User queryByOpenid(@Param("openid")String openid);
 
     public int reducePoint(@Param("userId")Long userId,@Param("num")Double num);
+
+    int addPoint(@Param("userId")Long userId,@Param("num")Double num);
 }

@@ -53,6 +53,10 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
 
         Result<Long> result = new Result<>();
         processWithTransation(reqeust,result,"createOrder",()->{
+
+            String openid = getOpenidByToken();
+            User user = userMapper.queryByOpenid(openid);
+
             Long orderId = generateOrderId();
 
             Sku sku = skuMapper.queryById(reqeust.getSkuId());
@@ -63,7 +67,7 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
 
             Order order = new Order();
             order.setOrderGoods(buildOrderGoods(sku,reqeust.getSkuNum()));
-            order.setUserId(reqeust.getUserId());
+            order.setUserId(user.getId());
             order.setPrice(sku.getPrice() * reqeust.getSkuNum() );
             order.setOrderAddress(addressMapper.queryById(reqeust.getAddressId()));
             reducePoint(order);
@@ -126,6 +130,8 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
         Result<Order> result = new Result<>();
         processWithNoTransation(reqeust,result,"orderRender",()->{
 
+            String openid = getOpenidByToken();
+            User user = userMapper.queryByOpenid(openid);
 
             Goods goods = new Goods();
             goods.setId(reqeust.getGoodsId());
@@ -133,7 +139,7 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
             tempSku.setId(reqeust.getSkuId());
             goods.setSkuList(Lists.newArrayList(tempSku));
             goods.setNum(reqeust.getSkuNum());
-            Address address = addressMapper.queryDefaultAddress(reqeust.getUserId());
+            Address address = addressMapper.queryDefaultAddress(user.getId());
 
             Order order = new Order();
             Goods renderGoods = goodsMapper.queryById(goods.getId());
@@ -165,7 +171,7 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
     private void reducePoint(Order order) {
 
         Double point = userMapper.queryPoint(order.getUserId());
-        if (point < order.getPrice()){
+        if (point == null || point < order.getPrice()){
             throw new BizException(LACK_OF_POINT);
         }
 

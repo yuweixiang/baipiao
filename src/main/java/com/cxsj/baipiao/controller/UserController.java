@@ -46,11 +46,11 @@ public class UserController extends BizTemplate {
 
             User user = userMapper.queryByOpenid(openid);
 
-            List<Address> addressList = addressMapper.queryByUser(reqeust.getUserId());
+            List<Address> addressList = addressMapper.queryByUser(user.getId());
 
             user.setAddresses(addressList);
             user.setServiceInfo(buildCustomService());
-            user.setUserOrders(orderQueryService.queryUserOrderCount(reqeust.getUserId()));
+            user.setUserOrders(orderQueryService.queryUserOrderCount(user.getId()));
 
             result.setData(user);
             buildSuccess(result);

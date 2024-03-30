@@ -3,18 +3,13 @@ package com.cxsj.baipiao.enums;
 import lombok.Getter;
 
 @Getter
-public enum OrderStatusEnum {
+public enum PointChangeStatusEnum {
 
-    CREATED("CREATED", "已创建"),
 
-    PAID("PAID", "待发货"),
+    INIT("INIT", "未兑换"),
 
-    SHIPPED("SHIPPED", "待收货"),
-
-    COMPLETE("COMPLETE", "已完成"),
-
-    CANCELED("CANCELED", "已取消"),
-            ;
+    REDEMMED("REDEMMED", "已兑换"),
+    ;
 
     /** 枚举代码 */
     private String code;
@@ -28,7 +23,7 @@ public enum OrderStatusEnum {
      * @param code 结果码
      * @param desc 结果描述
      */
-    private OrderStatusEnum(String code, String desc) {
+    private PointChangeStatusEnum(String code, String desc) {
         this.code = code;
         this.desc = desc;
     }
@@ -39,13 +34,12 @@ public enum OrderStatusEnum {
      * @param resultCode 结果码
      * @return 服务结果枚举
      */
-    public static OrderStatusEnum getByCode(String resultCode) {
-        for (OrderStatusEnum type : values()) {
+    public static PointChangeStatusEnum getByCode(String resultCode) {
+        for (PointChangeStatusEnum type : values()) {
             if (type.getCode().equals(resultCode)) {
                 return type;
             }
         }
         return null;
     }
-
 }

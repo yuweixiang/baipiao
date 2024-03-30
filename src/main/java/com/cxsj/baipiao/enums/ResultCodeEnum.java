@@ -23,12 +23,13 @@ public enum ResultCodeEnum {
     SYSTEM_ERROR("100", "系统错误"),
 
     /** 参数有误 */
+
     ILLEGAL_ARGUMENT("103", "请求参数有误"),
 
     APP_KEY_NOT_EXISTS("104", "appKey不存在"),
     USER_NOT_RIGHT("105", "改账号不是通过你的链接登记的，无法查询！"),
     ILLEGAL_REQUEST("106", "非法请求！"),
-    LACK_OF_POINT("107","积分不足,无法下单!"),
+    LACK_OF_POINT("107","您的积分不足,无法下单!"),
     LACK_OF_STOCK("110","库存不足!"),
     NICK_NOT_LOGIN("108","账号未登记，无法查询!"),
     TIME_OUT("109","已经超过查询时间!"),

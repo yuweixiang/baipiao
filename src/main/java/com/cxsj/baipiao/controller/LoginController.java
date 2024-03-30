@@ -59,6 +59,7 @@ public class LoginController {
             user = new User();
             user.setOpenid(openid);
             user.setStatus("1");
+            user.setPoint(0d);
             user.setSessionKey(sessionKey);
             userMapper.insert(user);
         }
