@@ -5,6 +5,7 @@ import com.cxsj.baipiao.dal.dao.JstTokenMapper;
 import com.cxsj.baipiao.domain.JstToken;
 import com.cxsj.baipiao.utils.HttpClientTemplete;
 import com.cxsj.baipiao.utils.HttpRequestItem;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.NameValuePair;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
+@Slf4j
 public class JstController {
 
     @Resource
@@ -42,6 +44,7 @@ public class JstController {
             }
         }, pair);
 
+        log.info("jst result:{}",str);
         JSONObject object = JSONObject.parseObject(str);
         jstToken.setAccessToken(object.getJSONObject("data").getString("access_token"));
         jstToken.setExpiresIn(object.getJSONObject("data").getLong("expires_in"));
