@@ -17,5 +17,5 @@ public interface SkuMapper {
 
     Double queryMinPrice(@Param("goodsId") Long gooodsId);
 
-    int reduceStock(@Param("skuId") Long skuId, @Param("num") Integer num);
+    int reduceStock(@Param("id") Long skuId, @Param("num") Integer num);
 }

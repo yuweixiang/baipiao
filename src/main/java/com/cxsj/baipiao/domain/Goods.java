@@ -55,6 +55,10 @@ public class Goods {
 
     private String specDesc;
 
+    private String outerId;
+
+    private String outerShopId;
+
     public static void main(String[] args) {
         List<GoodsSpec> skuSpecList = new ArrayList<>();
         GoodsSpec skuSpec = new GoodsSpec();

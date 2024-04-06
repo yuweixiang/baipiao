@@ -10,4 +10,6 @@ public class IndexConfig {
     private List<String> bannerUrls;
 
     private List<IndexTab> tabList;
+
+    private String accessToken;
 }

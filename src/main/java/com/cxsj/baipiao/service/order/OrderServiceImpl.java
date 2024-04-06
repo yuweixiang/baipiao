@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -68,13 +69,15 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
             Order order = new Order();
             order.setOrderGoods(buildOrderGoods(sku,reqeust.getSkuNum()));
             order.setUserId(user.getId());
-            order.setPrice(sku.getPrice() * reqeust.getSkuNum() );
+            order.setPrice(new BigDecimal(sku.getPrice()).multiply(new BigDecimal(reqeust.getSkuNum())).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
             order.setOrderAddress(addressMapper.queryById(reqeust.getAddressId()));
             reducePoint(order);
+            reduceStock(sku,reqeust.getSkuNum());
             order.setStatus(OrderStatusEnum.PAID.getCode());
             order.setStatusName(OrderStatusEnum.PAID.getDesc());
             order.setId(orderId);
             orderMapper.insert(order);
+            goodsMapper.addSoldNum(order.getOrderGoods().getId(),reqeust.getSkuNum());
             order.getOrderAddress().setOrderId(orderId);
             order.getOrderGoods().setOrderId(orderId);
             orderAddressMapper.insert(order.getOrderAddress());
@@ -86,6 +89,13 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
         return result;
     }
 
+    private void reduceStock(Sku sku, Integer skuNum) {
+        int num = skuMapper.reduceStock(sku.getId(),skuNum);
+        if (num<0){
+            throw new BizException(ResultCodeEnum.LACK_OF_STOCK,"库存不足，请重新下单！");
+        }
+    }
+
     private Goods buildOrderGoods(Sku sku,int num) {
         Goods goods = goodsMapper.queryById(sku.getGoodsId());
         goods.setId(sku.getGoodsId());
@@ -93,6 +103,8 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
         goods.setSkuId(sku.getId());
         goods.setPrice(sku.getPrice());
         goods.setNum(num);
+        goods.setOuterId(sku.getOuterId());
+        goods.setOuterShopId(sku.getOuterShopId());
         goods.setPrimaryImage(sku.getSkuImage());
         goods.setSkuInfo(buildSkuInfo(goods,sku.getSkuSpecs()));
         return goods;
@@ -150,7 +162,7 @@ public class OrderServiceImpl extends BizTemplate implements OrderService{
             renderGoods.setSkuList(Lists.newArrayList(sku));
             order.setOrderGoods(renderGoods);
             order.setOrderAddress(address);
-            order.setPrice(sku.getPrice() * goods.getNum());
+            order.setPrice(new BigDecimal(sku.getPrice()).multiply(new BigDecimal(goods.getNum())).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
             result.setData(order);
             buildSuccess(result);
         });

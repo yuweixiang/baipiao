@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.Order"/>
     <sql id="Base_Column_List">
         id
-        , gmt_create, gmt_modified, user_id, status, price,logistics_no, feature
+        , gmt_create, gmt_modified, user_id, status, price,logistics_no, feature,outer_id,logistics_company
     </sql>
 
     <select id="queryById" resultMap="BaseResultMap">
@@ -36,15 +36,55 @@
         limit #{index},#{pageSize}
     </select>
 
+
+    <select id="queryByStatus" resultType="com.cxsj.baipiao.domain.Order">
+        select
+        <include refid="Base_Column_List"/>
+        from orders
+        where status= #{status}
+        order by id desc
+        limit #{index},#{pageSize}
+    </select>
+
+    <select id="queryWaitSynOrder" resultType="com.cxsj.baipiao.domain.Order">
+        select
+        <include refid="Base_Column_List"/>
+        from orders
+        where status in ('PAID','SHIPPED')
+        order by id desc
+        limit #{index},#{pageSize}
+    </select>
+
+
     <select id="queryUserOrderCount" resultType="com.cxsj.baipiao.domain.UserOrder">
         select status as tabType,count(1) as num from orders where user_id = #{userId} group by status
+    </select>
+    <select id="queryByOrderId" resultType="com.cxsj.baipiao.domain.Order">
+        select
+        <include refid="Base_Column_List"/>
+        from orders
+        where id = #{orderId}
+    </select>
+
+    <select id="countByStatus" resultType="java.lang.Integer">
+        select
+        count(1)
+        from orders
+        where  status= #{status} and outer_id is null
+    </select>
+
+    <select id="countWaitSyncOrder" resultType="java.lang.Integer">
+        select
+            count(1)
+        from orders
+        where  status in ('PAID','SHIPPED') and outer_id is not null
     </select>
 
     <insert id="insert" parameterType="com.cxsj.baipiao.domain.Order">
         insert into orders (id, gmt_create, gmt_modified,
-                            user_id, status, price, logistics_no, feature)
+                            user_id, status, price, logistics_no, feature,outer_id,logistics_company)
         values ( #{id,jdbcType=BIGINT}, now(), now(), #{userId}, #{status}, #{price}
-               , #{logisticsNo}, #{feature,jdbcType=VARCHAR})
+               , #{logisticsNo}, #{feature,jdbcType=VARCHAR} ,#{outerId},#{logisticsCompany})
     </insert>
 
     <update id="updateStatus" parameterType="com.cxsj.baipiao.domain.Order">
@@ -52,5 +92,21 @@
         set gmt_modified= now(),
             status=#{status}
         where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateOuterId">
+        update orders
+        set gmt_modified= now(),
+            outer_id=#{outerId}
+        where id = #{orderId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateLogisticsInfo">
+        update orders
+        set gmt_modified= now(),
+            status='SHIPPED',
+            logistics_no = #{logisticsNo},
+            logistics_company = #{logisticsCompany}
+        where id = #{orderId}
     </update>
 </mapper>

@@ -5,14 +5,15 @@
 
     <sql id="Base_Column_List">
         id,order_id, title,price,primary_image,num,sku_info,category_id,images,desc_image,gmt_create,gmt_modified,feature,
-        goods_id,sku_id
+        goods_id,sku_id,outer_id,outer_shop_id
     </sql>
 
     <insert id="insert">
         insert into order_goods (gmt_create, gmt_modified, order_id, title,price,
-                                 primary_image,num,sku_info,category_id,images,desc_image, feature,goods_id,sku_id)
+                                 primary_image,num,sku_info,category_id,images,desc_image, feature,goods_id,sku_id,outer_id,outer_shop_id)
         values ( now(), now(),#{orderId}, #{title},#{price}, #{primaryImage},#{num}
-               , #{skuInfo}, #{categoryId}, #{images},#{descImage}, #{feature,jdbcType=VARCHAR},#{goodsId},#{skuId})
+               , #{skuInfo}, #{categoryId}, #{images},#{descImage}, #{feature,jdbcType=VARCHAR},#{goodsId},#{skuId}
+               , #{outerId},#{outerShopId})
     </insert>
 
     <select id="batchQuery" resultType="com.cxsj.baipiao.domain.Goods">

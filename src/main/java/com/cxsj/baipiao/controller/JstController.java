@@ -7,6 +7,7 @@ import com.cxsj.baipiao.utils.HttpClientTemplete;
 import com.cxsj.baipiao.utils.HttpRequestItem;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.NameValuePair;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,22 +20,25 @@ public class JstController {
     @Resource
     private JstTokenMapper jstTokenMapper;
 
+    @Value("${jstAppKey}")
+    private String appKey;
+
     @RequestMapping("/callback")
-    public void getToken(String appKey,String code,String state,String sign){
+    public void getToken(String sign,String time){
 
         JstToken jstToken = new JstToken();
         jstToken.setAppKey(appKey);
-        jstToken.setCode(code);
-        jstToken.setState(state);
+        jstToken.setCode("cxsjbp");
+        jstToken.setState("state");
         jstToken.setSign(sign);
         HttpClientTemplete httpClientTemplete = new HttpClientTemplete();
-        String url = "https://openapi.jushuitan.com/openWeb/auth/accessToken";
+        String url = "https://openapi.jushuitan.com/openWeb/auth/getInitToken";
         NameValuePair[] pair = new NameValuePair[6];
         pair[0] = new NameValuePair("app_key",appKey);
-        pair[1] = new NameValuePair("timestamp",String.valueOf(System.currentTimeMillis()));
+        pair[1] = new NameValuePair("timestamp",time);
         pair[2] = new NameValuePair("grant_type","authorization_code");
         pair[3] = new NameValuePair("charset","utf-8");
-        pair[4] = new NameValuePair("code",code);
+        pair[4] = new NameValuePair("code","cxsjbp");
         pair[5] = new NameValuePair("sign",sign);
 
         String str = httpClientTemplete.postMethod(new HttpRequestItem(url,null,null) {

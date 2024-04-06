@@ -67,6 +67,7 @@ public class DynamicConfig {
     private void updateConfig(Properties properties) throws Exception {
         indexConfig.setTabList(JSONObject.parseArray(getStr(properties.getProperty("tabList"),""), IndexTab.class));
         indexConfig.setBannerUrls(JSONObject.parseArray(getStr(properties.getProperty("bannerUrls"),""), String.class));
+        indexConfig.setAccessToken(getStr(properties.getProperty("accessToken"),""));
     }
 
     private String getStr(String str, String defStr) {

@@ -13,6 +13,14 @@
                , #{categoryId}, #{stockNum}, #{images}, #{soldNum},#{descImage} #{feature,jdbcType=VARCHAR},#{specDesc})
     </insert>
 
+    <update id="addSoldNum">
+        update goods set sold_num = sold_num+#{num} where id = #{id}
+    </update>
+
+    <update id="reduceStock">
+        update goods set stock_num = stock_num-#{num} where id = #{id}
+    </update>
+
     <select id="pageQueryByCondition" resultType="com.cxsj.baipiao.domain.Goods">
         select
         <include refid="Base_Column_List"/>

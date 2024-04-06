@@ -34,4 +34,8 @@ public class Order {
     private int settleType = 1;
 
     private Logistics logistics;
+
+    private String outerId;
+
+    private String logisticsCompany;
 }

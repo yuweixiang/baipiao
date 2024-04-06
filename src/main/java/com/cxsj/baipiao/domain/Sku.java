@@ -28,6 +28,10 @@ public class Sku {
 
     private String feature;
 
+    private String outerId;
+
+    private String outerShopId;
+
     public static void main(String[] args) {
         SpecInfo specInfo = new SpecInfo();
         specInfo.setSpecId(1L);

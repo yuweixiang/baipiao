@@ -4,21 +4,21 @@
     <resultMap id="BaseResultMap" type="com.cxsj.baipiao.domain.Sku"/>
 
     <sql id="Base_Column_List">
-        id, gmt_create, gmt_modified,goods_id, sku_image, price, stock, sold_num, sku_specs, feature
+        id, gmt_create, gmt_modified,goods_id, sku_image, price, stock, sold_num, sku_specs, feature,outer_id,outer_shop_id
     </sql>
 
     <update id="batchInsert">
-        insert into goods (gmt_create, gmt_modified, goods_id,sku_image, price, stock, sold_num, sku_specs, feature)
+        insert into goods (gmt_create, gmt_modified, goods_id,sku_image, price, stock, sold_num, sku_specs, feature,outer_id,outer_shop_id)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             ( now(),now() ,#{item.goodsId},
             #{item.skuImage}, #{item.price}, #{item.stock},
-            #{item.soldNum}, #{item.skuSpecs,jdbcType=VARCHAR}, #{item.feature}
+            #{item.soldNum}, #{item.skuSpecs,jdbcType=VARCHAR}, #{item.feature},#{outerId},#{outerShopId}
             )
         </foreach>
     </update>
     <update id="reduceStock">
-        update users set stock = stock-#{num}
+        update sku set stock = stock-#{num},sold_num=sold_num+#{num}
         where id = #{id} and stock >= #{num}
     </update>
 

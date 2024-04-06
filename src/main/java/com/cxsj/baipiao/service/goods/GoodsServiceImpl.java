@@ -59,4 +59,9 @@ public class GoodsServiceImpl implements GoodsService{
 
         return goods;
     }
+
+    public static void main(String[] args) {
+        String s="[\"https://gw.alicdn.com/imgextra/i3/2207281618004/O1CN01y9hSCG28zt2Jgfntq_!!2207281618004.jpg_Q75.jpg_.webp\",\"https://gw.alicdn.com/imgextra/i2/2207281618004/O1CN01oOvqZh28zt2HOF4P1_!!2207281618004.jpg_Q75.jpg_.webp\",\"https://gw.alicdn.com/imgextra/i4/2207281618004/O1CN01CATKvk28zt2BoPkyV_!!2207281618004.jpg_Q75.jpg_.webp\",\"https://gw.alicdn.com/imgextra/i3/2207281618004/O1CN01O0VWLE28zt2ODAbBu_!!2207281618004.jpg_Q75.jpg_.webp\"]";
+        System.out.println(JSONObject.parseArray(s,String.class));
+    }
 }

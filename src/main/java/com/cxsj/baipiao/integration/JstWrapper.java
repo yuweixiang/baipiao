@@ -1,5 +1,6 @@
 package com.cxsj.baipiao.integration;
 
+import com.cxsj.baipiao.diamond.DynamicConfig;
 import com.jushuitan.api.ApiClient;
 import com.jushuitan.api.ApiRequest;
 import com.jushuitan.api.ApiResponse;
@@ -25,7 +26,7 @@ public class JstWrapper {
         // 设置超时时间
 //        ((DefaultApiClient)client).setReadTimeout(3000);
 //        ((DefaultApiClient)client).setConnectTimeout(2000);
-        String accessToken = "b70b7d7fef5341a6bc06e25e2aae1e85";
+        String accessToken = DynamicConfig.getInstance().getIndexConfig().getAccessToken();
         // 构建请求对象
         ApiRequest request = new ApiRequest.Builder(url, appKey, appSecret)
                 .biz(biz).build();

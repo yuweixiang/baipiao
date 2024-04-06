@@ -17,4 +17,8 @@ public interface GoodsMapper {
                                             @Param("pageSize") Integer pageSize);
 
     public Goods queryById(@Param("id") Long id);
+
+    int addSoldNum(@Param("id")Long id,@Param("num")Integer num);
+
+    int reduceStock(@Param("id")Long id,@Param("num")Integer num);
 }
