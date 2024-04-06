@@ -75,10 +75,8 @@ public class OrderStatusSyncJob {
             JSONObject object = array.getJSONObject(i);
             String status = object.getString("shop_status");
             Long orderId = object.getLong("so_id");
-            if (StringUtils.equals(status,"WAIT_SELLER_SEND_GOODS")){
-                return;
-            }
-            if (StringUtils.equals(status,"WAIT_BUYER_CONFIRM_GOODS") &&
+
+            if (StringUtils.isNotBlank(object.getString("l_id")) &&
                     StringUtils.equals(map.get(orderId).getStatus(),"PAID")){
                 String ldNod = object.getString("l_id");
                 String logisticsCompany = object.getString("logistics_company");

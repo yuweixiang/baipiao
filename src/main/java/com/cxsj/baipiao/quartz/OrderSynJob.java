@@ -12,6 +12,7 @@ import com.cxsj.baipiao.domain.Order;
 import com.cxsj.baipiao.domain.User;
 import com.cxsj.baipiao.enums.OrderStatusEnum;
 import com.cxsj.baipiao.integration.JstWrapper;
+import com.cxsj.baipiao.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -85,11 +86,11 @@ public class OrderSynJob {
         for(Order order : orders) {
             User user = userMapper.queryById(order.getUserId());
             Goods goods = orderGoodsMapper.queryByOrder(order.getId());
-            Address address = orderAddressMapper.queryByOrder(2024033021L);
+            Address address = orderAddressMapper.queryByOrder(order.getId());
             JSONObject object = new JSONObject();
             object.put("shop_id", 15940074);
             object.put("so_id", order.getId().toString());
-            object.put("order_date", "2024-04-01 14:11:22");
+            object.put("order_date", DateUtil.getNewFormatDateString(order.getGmtCreate()));
             object.put("shop_status", "WAIT_SELLER_SEND_GOODS");
             object.put("shop_buyer_id", user.getNick());
             object.put("receiver_state", address.getProvince());
@@ -101,6 +102,7 @@ public class OrderSynJob {
             object.put("pay_amount", order.getPrice());
             object.put("freight", 0);
             object.put("items", buildItems(goods));
+            object.put("pay","");
             array.add(object);
         }
         String result = jstWrapper.requestJst("https://openapi.jushuitan.com/open/jushuitan/orders/upload",array.toJSONString());
